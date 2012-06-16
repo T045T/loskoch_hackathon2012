@@ -1,5 +1,145 @@
 {% load absurl %}
 
+<style type="text/css">
+body{ display:block; background-color:#fefefe;
+  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
+  padding: 0.25em; }
+
+*.day { 
+    background-color:#dddddd; 
+    width:9%; 
+    min-width:105px; 
+    min-height:150px;
+    padding:5px; 
+    float:left;
+    border-width:1px;
+    border-right-style:solid;
+    border-bottom-style:solid;
+    margin-right:12px;
+    }
+*.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
+
+#container { width: 100%; background:#bbbbbb; }
+*.content { height:100%; min-width:960px;}
+
+
+#partner { height:200px; }
+#portrait { float:left; }
+#details { vertical-align:top; height:100%; margin-left:5px; float:left; }
+h1 { margin-top:12px; padding-top:0px;}
+h2 { margin-top:0px; }
+#date_options { margin-top:12px; height:100%;}
+h3 {
+    margin-top:4px;
+    text-align:left;
+    background-image:url(test.png);
+    background-repeat:repeat-x;
+    background-position:bottom;
+    padding-bottom:8px;
+    padding-left:4px;
+    margin-left:4px; margin-right:8px;}
+*.clear { clear:both; }
+
+*.test { 
+    width:250px;
+    height:250px;
+    margin-right:12px;
+    margin-bottom:12px;
+    background-color:#dd0000;
+    float:left; }
+*.recipes { 
+    margin-top:12px; }
+    
+*.img_scale_horizontal {
+	text-align: center;
+	width: 100%;
+}
+
+*.img_scale_vertical {
+	vertical-align: middle;
+	height: 100%;
+}
+    
+#my_flat {
+	position: fixed;
+	background-color:#005500;
+	float:right;
+	right:0;
+	top:0;
+	width:80px;
+	padding:6px;
+}
+
+*.head_shot {
+	margin-bottom:6px;
+}
+*.empty_box {
+	background-color:#aaaaaa
+	margin-bottom:6px;
+}
+
+*.empty_box_text {
+	margin: 0px;
+	text-align: center;
+	vertical-align: middle;
+	font-size:60px;
+}
+
+</style>
+    <div class="content">
+    <div id="my_flat">
+    {% for person in flat.flatmates.all %}
+    	<div class="head_shot">
+    		<img class="img_scale_horizontal" src="{{ person.image.url }}"></img>
+    	</div>
+    	{% endfor %}
+    	{% for i in range%}
+    	<div class="empty_box">
+    		<p class="empty_box_text">?</p>
+    	</div>
+    	{% endfor %}
+    </div>
+    <div id="partner">
+        <h1>Deine Dinner-Partner!</h1>
+        <img class="img_scale_vertical" id="portrait" src="foo.JPG" />
+        <div id="details">
+            <h2>Die Super-WG</h2>
+            <ul>
+                <li>Hans</li>
+                <li>Maria</li>
+                <li>Anna</li>
+                <li>Peter</li>
+            </ul>
+            <p>Wohnen in Karlsruhe</p>
+        </div>
+        <div id="map">
+            
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="date_options">
+        <div class="day">
+            <h3>Montag</h3>
+            <ul>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="recipes">
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+    </div>
+    <div class="clear"></div>
+    </div>
+
 <h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
 
 <h2>Deine WG</h2>
@@ -7,7 +147,7 @@
 <ul>
   {% for person in flat.flatmates.all %}
     <li>
-      <img src="{{ person.get_offline_graph.my_image_url }}" />
+      <img src="{{ person.image.url }}" />
       {{ person.facebook_name }}
     </li>
   {% endfor %}

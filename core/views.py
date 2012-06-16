@@ -38,4 +38,4 @@ def join_flat(request, flat_token):
 @login_required
 def dashboard(request):
     flat = request.user.get_profile().flat
-    return render(request, 'core/dashboard.html', {'flat': flat})
+    return render(request, 'core/dashboard.html', {'flat': flat, 'range' : range(flat.size - flat.flatmates.count())})
