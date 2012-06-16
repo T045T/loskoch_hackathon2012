@@ -1,0 +1,17 @@
+body{
+  display:block; background-color:#fefefe;
+  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
+  padding: 0.25em; 
+  text-align:center;
+}
+
+h3 {
+    margin-top:4px;
+    text-align:left;
+    background-image:url(test.png);
+    background-repeat:repeat-x;
+    background-position:bottom;
+    padding-bottom:8px;
+    padding-left:4px;
+    margin-left:4px; margin-right:8px;
+}

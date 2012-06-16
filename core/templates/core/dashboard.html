@@ -1,10 +1,10 @@
+{% extends 'base.html' %}
+
 {% load absurl %}
 
-<style type="text/css">
-body{ display:block; background-color:#fefefe;
-  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
-  padding: 0.25em; }
+{% block content %}
 
+<style type="text/css">
 *.day { 
     background-color:#dddddd; 
     width:9%; 
@@ -19,7 +19,6 @@ body{ display:block; background-color:#fefefe;
     }
 *.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
 
-#container { width: 100%; background:#bbbbbb; }
 *.content { height:100%; min-width:960px;}
 
 
@@ -29,15 +28,7 @@ body{ display:block; background-color:#fefefe;
 h1 { margin-top:12px; padding-top:0px;}
 h2 { margin-top:0px; }
 #date_options { margin-top:12px; }
-h3 {
-    margin-top:4px;
-    text-align:left;
-    background-image:url(test.png);
-    background-repeat:repeat-x;
-    background-position:bottom;
-    padding-bottom:8px;
-    padding-left:4px;
-    margin-left:4px; margin-right:8px;}
+
 *.clear { clear:both; }
 
 *.test { 
@@ -88,6 +79,8 @@ h3 {
 }
 
 </style>
+
+
     <div class="content">
     <div id="my_flat">
     {% for person in flat.flatmates.all %}
@@ -159,6 +152,8 @@ h3 {
     </div>
     <div class="clear"></div>
     </div>
+    
+{% endblock %}
 
 <!--<h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
 
