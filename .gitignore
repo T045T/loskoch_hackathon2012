@@ -4,6 +4,7 @@
 *.pyc
 local_settings.py
 db.sql
+uploads/
 
 # OS X trash
 .DS_Store

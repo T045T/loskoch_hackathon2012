@@ -1,4 +1,5 @@
 import os
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
 
@@ -55,7 +56,7 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'uploads')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = 'uploads'
+MEDIA_URL = '/uploads/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -86,7 +87,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.sites',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -96,7 +97,21 @@ INSTALLED_APPS = (
     'discussions',
     'recipes',
 
+    'django_facebook',
+
 )
+
+AUTHENTICATION_BACKENDS = (
+    'django_facebook.auth_backends.FacebookBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    "django.core.context_processors.request",
+    'django_facebook.context_processors.facebook',
+)
+
+TEMPLATE_DIRS = ('loskoch/templates',)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -127,4 +142,11 @@ LOGGING = {
     }
 }
 
-AUTH_PROFILE = 'loskoch.core.UserProfile'
+LOGIN_REDIRECT_URL = '/'
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+FACEBOOK_APP_ID = '485627884796007'
+FACEBOOK_APP_SECRET = 'ada728aeb6d4b70fc4470a38100e9e1e'
+AUTH_PROFILE_MODULE = 'core.PersonProfile'
+LOGIN_URL = '/facebook/connect/'
