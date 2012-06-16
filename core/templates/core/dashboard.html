@@ -28,7 +28,7 @@ body{ display:block; background-color:#fefefe;
 #details { vertical-align:top; height:100%; margin-left:5px; float:left; }
 h1 { margin-top:12px; padding-top:0px;}
 h2 { margin-top:0px; }
-#date_options { margin-top:12px; height:100%;}
+#date_options { margin-top:12px; }
 h3 {
     margin-top:4px;
     text-align:left;
@@ -48,7 +48,9 @@ h3 {
     background-color:#dd0000;
     float:left; }
 *.recipes { 
-    margin-top:12px; }
+    margin-top:12px;
+    padding-right: 80px;
+    float:left; }
     
 *.img_scale_horizontal {
 	text-align: center;
@@ -127,6 +129,24 @@ h3 {
                 <li>17:00</li>
             </ul>
         </div>
+        <div class="day">
+            <h3>Montag</h3>
+            <ul>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Montag</h3>
+            <ul>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
     </div>
     <div class="clear"></div>
     <div class="recipes">
@@ -140,7 +160,7 @@ h3 {
     <div class="clear"></div>
     </div>
 
-<h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
+<!--<h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
 
 <h2>Deine WG</h2>
 <tt>{% absurl join_flat flat.token %}</tt>
@@ -151,4 +171,4 @@ h3 {
       {{ person.facebook_name }}
     </li>
   {% endfor %}
-</ul>
+</ul>-->
