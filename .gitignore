@@ -1,3 +1,19 @@
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+# OS X trash
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
 *.py[co]
 
 # Packages
