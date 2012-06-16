@@ -50,10 +50,6 @@
         var service = new google.maps.places.PlacesService(map);
   
     autocomplete = new google.maps.places.Autocomplete(document.getElementById('id_address'), { types: [ 'geocode' ] });
-    document.getElementById('id_address').addEventListener("keypress", function(event) {
-        event.stopPropagation();
-        return false;
-    });
     google.maps.event.addListener(autocomplete, 'place_changed', function(event) {
       markResult();
     });
@@ -69,7 +65,9 @@
 			map.setZoom(17);
 		}
 		createMarker(place);
-		document.getElementById("coords").value = place.geometry.location;
+  
+		document.getElementById("id_location").value =
+		  "POINT (" + place.geometry.location.ab + ' ' + place.geometry.location.cb + ")";
   	} else {
   		
   	}
@@ -178,9 +176,6 @@ h3 {
       #id_address {
       	min-width:300px;
       }
-    #text {
-        margin-bottom:12px;
-    }
     
 </style>
 
@@ -208,14 +203,13 @@ h3 {
     {{ form.address.errors }}
     <label for="id_address">Adresse</label>
     <div id="locationField">
-        <input id="id_address" name="address" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+        {{ form.address }}
         <img id="logo" src="https://developers.google.com/maps/documentation/places/images/powered-by-google-on-white.png"></img>
     </div>
     </div>
     <div id="map"></div>
-    <div id="text">
-        <input class="field" id="coords" disabled="true"></input>
-    </div>
+    {{ form.location }}
+    {{ form.location.errors }}
     <a href="#" onClick="document.forms[0].submit()"><img src="/static/core/check.png"></img></a>
 </form>
 </div>

@@ -7,7 +7,7 @@
 <ul>
   {% for person in flat.flatmates.all %}
     <li>
-      <img src="{{ person.get_offline_graph.my_image_url }}" />
+      <img src="{{ person.image.url }}" />
       {{ person.facebook_name }}
     </li>
   {% endfor %}
