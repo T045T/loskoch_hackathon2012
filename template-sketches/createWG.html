@@ -1,9 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
-      xmlns:fb="http://ogp.me/ns/fb#">
-<head> <title>{% block title %}MyBlog{% endblock %}</title> 
+<!DOCTYPE HTML>
+<title>{% block title %}MyBlog{% endblock %}</title> 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
 <script type="text/javascript">
       var map;
@@ -53,7 +49,7 @@
         infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
   
-    autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ 'geocode' ] });
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('id_address'), { types: [ 'geocode' ] });
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       markResult();
     });
@@ -175,31 +171,44 @@ h3 {
         border: 1px solid #333;
         margin-top: 0.6em;
       }
-      #autocomplete {
+      #id_address {
       	min-width:300px;
       }
     
 </style>
 
-<body>
-
 <div class="content">
-    <h1>WG-Name</h1>
-    <p>Wie viele Leute wohnen bei euch?</p>
-    <input id="roommates" placeholder="Mitbewohner" type="text"></input>
-    <p>Wie viele Gäste verträgt eure WG?</p>
-    <input id="room_for" placeholder="Platz für..." type="text"></input>
+    <h1>WG Eintragen</h1>
+    <form method="POST" action="">
+    {% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.name.errors }}
+        <label for="id_name">Gib Eurer WG einen Namen!</label>
+        {{ form.name }}
+    </div>
+    <div class="fieldWrapper">
+    {{ form.size.errors }}
+    <label for="id_size">Wie viele Leute wohnen bei euch?</label>
+    {{ form.size }}
+    </div>
+    <div class="fieldWrapper">
+    {{ form.max_guests.errors }}
+    <label for="id_max_guests">Wie viele Gaeste vertraegt eure WG?</label>
+    {{ form.max_guests }}
+    </div>
         
-    <h2>Adresse</h2>
+    <div class="fieldWrapper">
+    {{ form.address.errors }}
+    <label for="id_address">Adresse</label>
     <div id="locationField">
-        <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+        <input id="id_address" name="address" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
         <img id="logo" src="https://developers.google.com/maps/documentation/places/images/powered-by-google-on-white.png"></img>
+    </div>
     </div>
     <div id="map"></div>
     <div id="text">
         <input class="field" id="coords" disabled="true"></input>
     </div>
-    <input id="submit_data" type="button" value="Speichern"></input>
+  <input type="submit" value="Erstellen" />
+</form>
 </div>
-</body>
-</html>
