@@ -37,13 +37,21 @@
     'country': 'long_name',
     'postal_code': 'short_name'
   };
+
+  function wktToLatLng(POINT) {
+    var res = /POINT \(([0-9\.]+) ([0-9\.]+)\)/.exec(POINT);
+    return new google.maps.LatLng(res[1], res[2]);
+  }
   
   function initialize() {
   var karlsruhe = new google.maps.LatLng(49.009148,8.379944);
+  var defaultCenter = (document.getElementById('id_location').value
+                    ? wktToLatLng(document.getElementById('id_location').value)
+                    : karlsruhe);
 
         map = new google.maps.Map(document.getElementById('map'), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center: karlsruhe,
+          center: defaultCenter,
           zoom: 15
         });
         infowindow = new google.maps.InfoWindow();
