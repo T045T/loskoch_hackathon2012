@@ -3,6 +3,7 @@
 *.pot
 *.pyc
 local_settings.py
+db.sql
 
 # OS X trash
 .DS_Store
