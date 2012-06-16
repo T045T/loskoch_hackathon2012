@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:fb="http://ogp.me/ns/fb#">
+<head> <title>{% block title %}MyBlog{% endblock %}</title> 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
+<script type="text/javascript">
+      var map;
+      var infowindow;
+
+      function callback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+          }
+        }
+      }
+
+      function createMarker(place) {
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent(place.name);
+          infowindow.open(map, this);
+        });
+      }
+      
+      google.maps.event.addDomListener(window, 'load', initialize);
+  
+  var placeSearch,autocomplete;
+  var component_form = {
+    'street_number': 'short_name',
+    'route': 'long_name',
+    'locality': 'long_name',
+    'administrative_area_level_1': 'short_name',
+    'country': 'long_name',
+    'postal_code': 'short_name'
+  };
+  
+  function initialize() {
+  var karlsruhe = new google.maps.LatLng(49.009148,8.379944);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          center: karlsruhe,
+          zoom: 15
+        });
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map);
+  
+    autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), { types: [ 'geocode' ] });
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      markResult();
+    });
+  }
+  
+  function markResult() {
+  	var place = autocomplete.getPlace();
+  	if (place && place.geometry) {
+		if (place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		} else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);
+		}
+		createMarker(place);
+		document.getElementById("coords").value = place.geometry.location;
+  	} else {
+  		
+  	}
+  }
+  
+  function fillInAddress() {
+    var place = autocomplete.getPlace();
+    
+    for (var component in component_form) {
+      document.getElementById(component).value = "";
+      document.getElementById(component).disabled = false;
+    }
+    
+    for (var j = 0; j < place.address_components.length; j++) {
+      var att = place.address_components[j].types[0];
+      if (component_form[att]) {
+        var val = place.address_components[j][component_form[att]];
+        document.getElementById(att).value = val;
+      }
+    }
+  }
+    
+  function geolocate() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var geolocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        autocomplete.setBounds(new google.maps.LatLngBounds(geolocation, geolocation));
+      });
+    }
+  }
+</script>
+</head>
+
+<style type="text/css">
+body{ display:block; background-color:#fefefe;
+  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
+  padding: 0.25em; 
+  text-align:center;}
+
+*.day { 
+    background-color:#dddddd; 
+    width:9%; 
+    min-width:105px; 
+    min-height:150px;
+    padding:5px; 
+    float:left;
+    border-width:1px;
+    border-right-style:solid;
+    border-bottom-style:solid;
+    margin-right:12px;
+    }
+*.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
+
+#container { width: 100%; background:#bbbbbb; }
+*.content { height:100%; }
+
+
+#partner { height:200px; }
+#portrait { float:left; }
+#details { vertical-align:top; height:100%; margin-left:5px; float:left; }
+h1 { margin-top:12px; padding-top:0px;}
+#date_options { margin-top:12px; height:100%;}
+h3 {
+    margin-top:4px;
+    text-align:left;
+    background-image:url(test.png);
+    background-repeat:repeat-x;
+    background-position:bottom;
+    padding-bottom:8px;
+    padding-left:4px;
+    margin-left:4px; margin-right:8px;}
+*.clear { clear:both; }
+
+*.test { 
+    width:250px;
+    height:250px;
+    margin-right:12px;
+    margin-bottom:12px;
+    background-color:#dd0000;
+    float:left; }
+*.recipes { 
+    margin-top:12px; }
+*.left_column { float:left; width:40%; }
+*.right_column { 
+    float:right; 
+    width:58%; 
+    min-width:440px;
+    background-image:url(trenner.png);
+    background-repeat:repeat-y;
+    background-position:left; 
+    padding-left:16px;
+    margin-top:24px;
+    vertical-align:bottom; }
+    
+    p {
+        margin:4px;
+        margin-top:12px;
+	}
+    
+    #map {
+        height: 400px;
+        width: 100%;
+        border: 1px solid #333;
+        margin-top: 0.6em;
+      }
+      #autocomplete {
+      	min-width:300px;
+      }
+    
+</style>
+
+<body>
+
+<div class="content">
+    <h1>WG-Name</h1>
+    <p>Wie viele Leute wohnen bei euch?</p>
+    <input id="roommates" placeholder="Mitbewohner" type="text"></input>
+    <p>Wie viele Gäste verträgt eure WG?</p>
+    <input id="room_for" placeholder="Platz für..." type="text"></input>
+        
+    <h2>Adresse</h2>
+    <div id="locationField">
+        <input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+        <img id="logo" src="https://developers.google.com/maps/documentation/places/images/powered-by-google-on-white.png"></img>
+    </div>
+    <div id="map"></div>
+    <div id="text">
+        <input class="field" id="coords" disabled="true"></input>
+    </div>
+    <input id="submit_data" type="button" value="Speichern"></input>
+</div>
+</body>
+</html>

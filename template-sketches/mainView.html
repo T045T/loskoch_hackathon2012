@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head> <title>{% block title %}MyBlog{% endblock %}</title> </head>
+
+<style type="text/css">
+body{ display:block; background-color:#fefefe;
+  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
+  padding: 0.25em; }
+
+*.day { 
+    background-color:#dddddd; 
+    width:9%; 
+    min-width:105px; 
+    min-height:150px;
+    padding:5px; 
+    float:left;
+    border-width:1px;
+    border-right-style:solid;
+    border-bottom-style:solid;
+    margin-right:12px;
+    }
+*.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
+
+#container { width: 100%; background:#bbbbbb; }
+*.content { height:100%; min-width:960px;}
+
+img { vertical-align: middle; height:100%; }
+
+#partner { height:200px; }
+#portrait { float:left; }
+#details { vertical-align:top; height:100%; margin-left:5px; float:left; }
+h1 { margin-top:12px; padding-top:0px;}
+h2 { margin-top:0px; }
+#date_options { margin-top:12px; height:100%;}
+h3 {
+    margin-top:4px;
+    text-align:left;
+    background-image:url(test.png);
+    background-repeat:repeat-x;
+    background-position:bottom;
+    padding-bottom:8px;
+    padding-left:4px;
+    margin-left:4px; margin-right:8px;}
+*.clear { clear:both; }
+
+*.test { 
+    width:250px;
+    height:250px;
+    margin-right:12px;
+    margin-bottom:12px;
+    background-color:#dd0000;
+    float:left; }
+*.recipes { 
+    margin-top:12px; }
+
+</style>
+
+<body>
+    <div class="content">
+    <div id="partner">
+        <h1>Deine Dinner-Partner!</h1>
+        <img id="portrait" src="foo.JPG" />
+        <div id="details">
+            <h2>Die Super-WG</h2>
+            <ul>
+                <li>Hans</li>
+                <li>Maria</li>
+                <li>Anna</li>
+                <li>Peter</li>
+            </ul>
+            <p>Wohnen in Karlsruhe</p>
+        </div>
+        <div id="map">
+            
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="date_options">
+        <div class="day">
+            <h3>Montag</h3>
+            <ul>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Dienstag</h3>
+            <ul>
+                <li>17:30</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Mittwoch</h3>
+            <ul>
+                <li>18:45</li>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Donnerstag</h3>
+            <ul>
+                <li>18:45</li>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Freitag</h3>
+            <ul>
+                <li>18:45</li>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Samstag</h3>
+            <ul>
+                <li>18:45</li>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+        <div class="day">
+            <h3>Sonntag</h3>
+            <ul>
+                <li>18:45</li>
+                <li>17:30</li>
+                <li>18:00</li>
+                <li>19:00</li>
+                <li>17:00</li>
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="recipes">
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+        <div class="test"></div>
+    </div>
+    <div class="clear"></div>
+    </div>
+</body>
+</html>
