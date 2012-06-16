@@ -6,6 +6,8 @@ from django.db.models.signals import post_save
 from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
 
+from django.contrib.gis.db.models import PointField
+
 from django_facebook.models import FacebookProfileModel
 
 
@@ -21,7 +23,7 @@ class Flatshare(models.Model):
     size = models.PositiveIntegerField()
     max_guests = models.PositiveIntegerField(validators=[MinValueValidator(2)])
     address = models.CharField(max_length=200)
-    # TODO geo coordinates
+    location = PointField()
 
 
 class PersonProfile(FacebookProfileModel):
