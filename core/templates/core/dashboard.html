@@ -1,0 +1,14 @@
+{% load absurl %}
+
+<h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
+
+<h2>Deine WG</h2>
+<tt>{% absurl join_flat flat.token %}</tt>
+<ul>
+  {% for person in flat.flatmates.all %}
+    <li>
+      <img src="{{ person.image.url }}" />
+      {{ person.facebook_name }}
+    </li>
+  {% endfor %}
+</ul>

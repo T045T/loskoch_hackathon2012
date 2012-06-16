@@ -3,6 +3,8 @@
 *.pot
 *.pyc
 local_settings.py
+db.sql
+uploads/
 
 # OS X trash
 .DS_Store
@@ -17,6 +19,7 @@ local_settings.py
 *.py[co]
 
 # Packages
+env/
 *.egg
 *.egg-info
 dist
@@ -28,6 +31,7 @@ var
 sdist
 develop-eggs
 .installed.cfg
+*zip
 
 # Installer logs
 pip-log.txt
