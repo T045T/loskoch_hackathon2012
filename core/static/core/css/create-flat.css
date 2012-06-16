@@ -1,0 +1,76 @@
+body{
+  display:block; background-color:#fefefe;
+  font-size:10pt;  font-family:arial,verdana,helvetica,sans-serif;
+  padding: 0.25em; 
+text-align:center;}
+
+*.day { 
+  background-color:#dddddd; 
+  width:9%; 
+  min-width:105px; 
+  min-height:150px;
+  padding:5px; 
+  float:left;
+  border-width:1px;
+  border-right-style:solid;
+  border-bottom-style:solid;
+  margin-right:12px;
+}
+*.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
+
+#container { width: 100%; background:#bbbbbb; }
+*.content { height:100%; }
+
+
+#partner { height:200px; }
+#portrait { float:left; }
+#details { vertical-align:top; height:100%; margin-left:5px; float:left; }
+h1 { margin-top:12px; padding-top:0px;}
+#date_options { margin-top:12px; height:100%;}
+h3 {
+  margin-top:4px;
+  text-align:left;
+  background-image:url(test.png);
+  background-repeat:repeat-x;
+  background-position:bottom;
+  padding-bottom:8px;
+  padding-left:4px;
+margin-left:4px; margin-right:8px;}
+*.clear { clear:both; }
+
+*.test { 
+  width:250px;
+  height:250px;
+  margin-right:12px;
+  margin-bottom:12px;
+  background-color:#dd0000;
+float:left; }
+*.recipes { 
+margin-top:12px; }
+*.left_column { float:left; width:40%; }
+*.right_column { 
+  float:right; 
+  width:58%; 
+  min-width:440px;
+  background-image:url(trenner.png);
+  background-repeat:repeat-y;
+  background-position:left; 
+  padding-left:16px;
+  margin-top:24px;
+vertical-align:bottom; }
+
+p {
+  margin:4px;
+  margin-top:12px;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+  border: 1px solid #333;
+  margin-top: 0.6em;
+}
+#id_address {
+  min-width:300px;
+}
+
