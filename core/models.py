@@ -77,3 +77,4 @@ def post_create_flatshare(sender, instance, created, **kwargs):
 
 post_save.connect(create_facebook_profile, sender=User)
 post_save.connect(post_create_flatshare, sender=Flatshare)
+post_save.connect(post_create_flatshare, sender=PersonProfile)
