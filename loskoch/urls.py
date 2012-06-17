@@ -11,6 +11,8 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
+    url('^recipes/', include('recipes.urls')),
+
     url('', include('core.urls')),
 
 ) + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

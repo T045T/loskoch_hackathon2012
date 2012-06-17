@@ -1,0 +1,217 @@
+*
+{
+	border: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;	
+}
+
+#main img
+{
+	vertical-align: bottom;	
+}
+
+input[type=text]
+{
+	color: #666;
+	border: solid 2px #ddd;	
+	padding: 5px;
+	margin: 0;
+}
+
+body 
+{
+	color: #666;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	margin: 0;	
+}
+
+#wrapper
+{
+	margin: 40px auto;
+	width: 960px;	
+}
+
+header
+{	
+	position: relative;
+}
+
+header h1
+{
+	display: inline;	
+}
+
+header h2
+{
+	display: inline;
+	font-size: 0.9em;	
+}
+
+header a
+{
+	display: block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#main
+{
+	position: relative;
+	border: solid 15px #ddd;
+	margin: 10px 0;
+	padding: 20px;	
+	height: 370px;
+}
+
+.box
+{
+	border: solid 2px #ddd;
+	padding: 10px;	
+}
+
+#library
+{
+	float: left;
+	width: 450px;
+	height: 350px;	
+}
+
+#search label
+{	
+	display: inline-block;
+	color: #aaa;
+	font-size: 0.85em;
+	font-weight: bold;
+	text-align: center;
+	margin-right: 12px;
+	margin-left: 12px;
+}
+
+#search input
+{
+	width: 325px;
+}
+
+#search-results
+{
+	margin-top: 10px;
+	overflow: auto;
+	overflow-y: scroll;
+	height: 310px;	
+}
+
+#search-results li
+{
+	float: left;
+	border: dotted 5px #fff;
+	cursor: pointer;
+}
+
+#search-results li:hover
+{
+	border-color: #ff0084;
+}
+
+#search-results li:active,
+#search-results li.ui-draggable-dragging,
+#search-results li.selected
+{
+	border-color: #0063dc;
+}
+
+#search-results li img
+{
+	width: 75px;
+	height: 75px;	
+}
+
+#search-results #spinner
+{
+	position: absolute;
+	left: 220px;
+	top: 175px;	
+}
+
+#preview
+{
+	float: right;
+	width: 370px;
+	height: 350px;	
+	padding: 10px;
+}
+
+#preview-image
+{
+	display: table-cell;
+	background: #ddd;
+	text-align: center;
+	vertical-align: middle;
+	padding:0px;
+	width: 370px;
+	height: 280px;	
+}
+
+#id_image_url
+{
+	display:none;
+}
+
+#id_name {
+	margin-top: 0px;
+	margin-bottom: 6px;
+}
+
+#preview-image img
+{
+	max-width: 370px;
+	max-height: 280px;	
+}
+
+#preview-caption
+{
+	margin-top: 6px;
+}
+
+#preview-caption input
+{
+	width: 370px;
+}
+
+footer
+{
+	text-align: right;	
+}
+
+footer button
+{
+	color: #fff;
+	background-color: #0063dc;
+	border: 0;
+	font-weight: bold;
+	padding: 10px 20px;	
+	cursor: pointer;
+}
+
+footer button.disabled
+{
+	background-color: #aaa;	
+}
+
+#slides
+{
+	display: none;	
+}
+
+*.fieldWrapper label
+{	
+	display: inline-block;
+	color: #aaa;
+	font-size: 0.85em;
+	font-weight: bold;
+	text-align: center;
+	margin-right: 24px;
+	margin-left: 12px;
+}
