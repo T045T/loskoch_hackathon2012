@@ -29,31 +29,29 @@
     padding-right: 80px;
     float:left; }
     
-#my_flat {
-	position: fixed;
-	overflow: auto;
-	background-color:#005500;
-	float:right;
-	right:0;
-	top:0;
-	width:100px;
-	padding:6px;
-}
+
 
 *.head_shot {
 	margin-bottom:6px;
+	margin-right:6px;
+	width: 120px;
+	float:left;
+	max-height: 110px
 }
 *.empty_box {
-	width:85px;
+	width:120px;
+	height: 100px;
 	background-color:#aaaaaa;
 	margin-bottom:6px;
+	margin-right:6px;
+	float:left;
 }
 
 *.empty_box_text {
 	margin: 12px;
 	text-align: center;
 	vertical-align: middle;
-	font-size:60px;
+	font-size:65px;
 }
 
 *.image_container {
@@ -61,52 +59,65 @@
 	margin-top: 12px;
 	margin-bottom: 12px;
 }
-.container-fluid > .sidebar-right {
-  float: right;
-  width: 220px;
+
+#my_flat {
+	float:right;
+}
+#other_flat {
+	float:left;
 }
 
 </style>
 
 
 <div class="content">
-  <div id="my_flat">
-    <tt>{% absurl join_flat flat.token %}</tt>
-    {% for person in flat.flatmates.all %}
-    	<div class="head_shot thumbnail">
-    		<img class="img_scale_horizontal" src="{{ person.image.url }}"></img>
-    	</div>
-    	<strong>{{ person.facebook_name }}</strong>
-    	{% endfor %}
-    	{% for i in range%}
-    	<div class="empty_box thumbnail">
-    		<p class="empty_box_text">?</p>
-    	</div>
-    	{% endfor %}
-    </div>
-    {% if not flat.latest_pairing %}
-      <h1>Noch kein Date generiert</h1>
-    {% else %}
-      <div id="partner">
-          <h1>WG-Dinner mit...</h1>
-          <div id="details">
-            {% for flat in flat.latest_pairing.flats.all %}
-              {% if flat != user.flat %}
-                <h2>{{ flat.name }}</h2>
-                <ul class="unstyled">
-                  {% for flatmate in flat.flatmates.all %}
-                    <li>{{ flatmate.facebook_name }}</li>
-                  {% endfor %}
-                </ul>
-                <p>Wohnen hier: {{ flat.address }}</p>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <div id="map">
-              
-          </div>
-      </div>
-      <div class="clear"></div>
+	<div class="row">
+		<div id="other_flat" class="span6">
+			{% if not flat.latest_pairing %}
+			<h1>Noch kein Date generiert</h1>
+			{% else %}
+			<h1>WG-Dinner mit...</h1>
+			{% for flat in flat.latest_pairing.flats.all %}
+      		{% if flat != user.flat %}
+      		<h2>{{ flat.name }}</h2>
+      		{% for flatmate in flat.flatmates.all %}
+      		<div class="head_shot thumbnail">
+				<img class="img_scale_horizontal" src="{{ flatmate.image.url }}"></img>
+				<strong>{{ flatmate.facebook_name }}</strong>
+			</div>
+			{% endfor %}
+		    <div class="clear"></div>
+			<p>Wohnen hier: {{ flat.address }}</p>
+			{% endif %}
+			{% endfor %}
+			{% endif %}
+		</div>
+		<div id="my_flat" class="span6">
+			<h1>Deine WG</h1>
+			<h2>{{ flat.name }}</h2>
+			{% for person in flat.flatmates.all %}
+			<div class="head_shot thumbnail">
+				<img class="img_scale_horizontal" src="{{ person.image.url }}"></img>
+		    	<strong>{{ person.facebook_name }}</strong>
+		    </div>
+		    {% endfor %}
+		    {% for i in range%}
+		    <div class="empty_box thumbnail">
+		    	<p class="empty_box_text">?</p>
+		    </div>
+		    {% endfor %}
+		    <div class="empty_box thumbnail">
+		    	<p class="empty_box_text">?</p>
+		    </div>
+		    <div class="empty_box thumbnail">
+		    	<p class="empty_box_text">?</p>
+		    </div>
+		    <div class="clear"></div>
+		    <pre class="span4" >{% absurl join_flat flat.token %}</pre>
+		</div>
+	</div>
+	{% if flat.latest_pairing %}
+      	      <div class="clear"></div>
       <div id="date_options">
         <form method=post action="{% url dashboard_save_schedule %}">
         {% csrf_token %}
