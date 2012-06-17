@@ -1,0 +1,49 @@
+{% block content %}
+<link href=/static/recipes/css/slidr.css rel="stylesheet" type="text/css">
+<script type="text/javascript" src=/static/recipes/js/jquery-1.7.1.min.js></script>
+<script type="text/javascript" src=/static/recipes/js/knockout-2.0.0.js></script>
+<script type="text/javascript" src=/static/recipes/js/knockout.mapping-latest.js></script>
+
+<script type="text/javascript" src=/static/recipes/js/slidr.js></script>
+</head>
+
+<body>
+	<div id="wrapper">
+        <form method="POST" action="">
+  {% csrf_token %}
+        <div id="main">
+        	
+            <div id="library" class="box">
+            	<div id="search">
+                	<label for="search-term">Search</label>
+                    <input id="search-term" type="text" 
+                    	data-bind="value: searchTerm, valueUpdate: 'afterkeydown', event: {keyup: search }"></input>
+                </div>
+                <div id="search-results">
+	                <ul data-bind="foreach: foundPhotos">
+		                <li data-bind="attr: { 'data-id' : id }, click:select, css: {selected: $root.selectedPhoto() !== undefined && $root.selectedPhoto().id() === id() }">
+			                <img data-bind="attr: { 'src' : smallImageUrl, 'alt' : title, title: title }"></img>
+			            </li>
+			        </ul>
+				</div>
+            </div>
+            	<div id="preview" class="box" data-bind="with: selectedPhoto">
+            		{{ form.name }}
+	            	<div id="preview-image">
+		            	<img data-bind="attr: { 'src' : mediumImageUrl, 'alt' : title }"></img>
+		            	<input data-bind="attr: { 'value' : mediumImageUrl }" type="url" name="image_url" id="id_image_url"></input>
+		            </div>
+		            <div id="preview-caption">
+			            <input name="desc" id="id_desc" type="text" data-bind="value: title, valueUpdate: 'afterkeydown'"></input>
+			        </div>
+			    </div>
+        </div>
+        
+        <footer>
+        	<button>&#9658;&nbsp;&nbsp;Speichern</button>
+        </footer>
+        </form>
+        
+    </div>
+</body>
+{% endblock %}
