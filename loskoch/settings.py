@@ -150,6 +150,6 @@ LOGIN_REDIRECT_URL = '/'
 FACEBOOK_APP_ID = '485627884796007'
 FACEBOOK_APP_SECRET = 'ada728aeb6d4b70fc4470a38100e9e1e'
 AUTH_PROFILE_MODULE = 'core.PersonProfile'
-LOGIN_URL = '/facebook/connect/'
+LOGIN_URL = '/facebook-connect/'
 
 TIME_FORMAT = "H:i"

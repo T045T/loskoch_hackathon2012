@@ -39,8 +39,10 @@ def join_flat(request, flat_token):
     return redirect('dashboard')
 
 
-@login_required
 def dashboard(request):
+    if not request.user.is_authenticated():
+        return render(request, 'core/home.html')
+
     flat = request.user.get_profile().flat
 
     if flat is None:
@@ -92,3 +94,7 @@ def vote_for_recipe(request, recipe_id):
     user = request.user.get_profile()
     user.vote(recipe)
     return redirect('dashboard')
+
+
+def facebook_connect(request):
+    return redirect('/facebook/connect/?facebook_login=1&register_next=%s' % request.GET['next'])
