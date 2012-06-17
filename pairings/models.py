@@ -1,5 +1,6 @@
 from django.utils.timezone import now, timedelta
 import math
+import urllib
 from itertools import chain
 from django.db import models
 from core.models import Flatshare
@@ -25,6 +26,11 @@ class Pairing(models.Model):
                     all_recipes.append(recipe)
                     recipe.votes = self.all_votes.filter(vote_recipe=recipe).count()
         return all_recipes
+
+    def gmaps_url(self, guest):
+        url = 'https://maps.google.com/maps?'
+        values = {'saddr': guest.address.encode("utf-8"), 'daddr': self.host.address.encode("utf-8")}
+        return url + urllib.urlencode(values)
 
     def get_all_flatmates(self):
         mates = []

@@ -70,6 +70,7 @@ def dashboard(request):
         'range': range(flat.size - flat.flatmates.count()),
         'latest_pairing': flat.latest_pairing,
         'latest_pairing_date_candidates': date_candidates,
+        'gmaps_url': flat.latest_pairing.gmaps_url(flat),
     })
 
 
