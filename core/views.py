@@ -55,12 +55,11 @@ def dashboard(request):
                 if candidate.day not in date_candidates:
                     date_candidates[candidate.day] = {'votes': 0, 'start': candidate.time}
                 else:
-                    if candidate.time != None:
+                    if candidate.time:
                         date_candidates[candidate.day]['votes'] += 1
-                        date_candidates[candidate.day]['start'] = max(
-                            date_candidates[candidate.day]['start'],
-                            candidate.time,
-                        )
+                        if date_candidates[candidate.day]['start'] is None or \
+                           date_candidates[candidate.day]['start'] < candidate.time:
+                            date_candidates[candidate.day]['start'] = candidate.time
     else:
         date_candidates = None
 
