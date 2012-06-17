@@ -1,3 +1,5 @@
+import datetime
+
 import django.views.generic
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -38,4 +40,30 @@ def join_flat(request, flat_token):
 @login_required
 def dashboard(request):
     flat = request.user.get_profile().flat
-    return render(request, 'core/dashboard.html', {'flat': flat, 'range' : range(flat.size - flat.flatmates.count())})
+
+    if flat.latest_pairing:
+        latest_pairing_date_candidates = flat.latest_pairing.start_time_candidates.filter(user=request.user)
+    else:
+        latest_pairing_date_candidates = None
+
+    return render(request, 'core/dashboard.html', {
+        'user': request.user.get_profile(),
+        'flat': flat,
+        'range' : range(flat.size - flat.flatmates.count()),
+        'latest_pairing': flat.latest_pairing,
+        'latest_pairing_date_candidates': latest_pairing_date_candidates,
+    })
+
+
+@login_required
+def save_schedule(request):
+    if request.method == 'POST':
+        start_time_candidates = iter(request.user.get_profile().get_start_time_candidates_for_latest_pairing())
+        times = request.POST.getlist('start_time')
+        for start_time in times:
+            hour, minute = map(int, start_time.split(':'))
+            candidate = start_time_candidates.next()
+            candidate.time = datetime.time(hour=hour, minute=minute)
+            candidate.save()
+
+    return redirect('dashboard')

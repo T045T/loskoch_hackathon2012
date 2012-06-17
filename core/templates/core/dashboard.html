@@ -5,6 +5,7 @@
 {% block content %}
 
 <style type="text/css">
+td { border: 1px solid black; }
 *.day { 
     background-color:#dddddd; 
     width:9%; 
@@ -81,7 +82,7 @@ h2 { margin-top:0px; }
 </style>
 
 
-    <div class="content">
+<div class="content">
     <div id="my_flat">
     {% for person in flat.flatmates.all %}
     	<div class="head_shot">
@@ -94,68 +95,79 @@ h2 { margin-top:0px; }
     	</div>
     	{% endfor %}
     </div>
-    <div id="partner">
-        <h1>Deine Dinner-Partner!</h1>
-        <img class="img_scale_vertical" id="portrait" src="foo.JPG" />
-        <div id="details">
-            <h2>Die Super-WG</h2>
-            <ul>
-                <li>Hans</li>
-                <li>Maria</li>
-                <li>Anna</li>
-                <li>Peter</li>
-            </ul>
-            <p>Wohnen in Karlsruhe</p>
-        </div>
-        <div id="map">
-            
-        </div>
+    {% if not flat.latest_pairing %}
+      <h1>Noch kein Date generiert</h1>
+    {% else %}
+      <div id="partner">
+          <h1>WG-Dinner mit...</h1>
+          <img class="img_scale_vertical" id="portrait" src="foo.JPG" />
+          <div id="details">
+            {% for flat in flat.latest_pairing.flats.all %}
+              {% if flat != user.flat %}
+                <h2>{{ flat.name }}</h2>
+                <ul>
+                  {% for flatmate in flat.flatmates.all %}
+                    <li>{{ flatmate.facebook_name }}</li>
+                  {% endfor %}
+                </ul>
+                <p>Wohnen hier: {{ flat.address }}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div id="map">
+              
+          </div>
+      </div>
+      <div class="clear"></div>
+      <div id="date_options">
+        <form method=post action="{% url dashboard_save_schedule %}">
+        {% csrf_token %}
+        <table>
+          <thead>
+            <tr>
+              <td></td>
+              {% for date in latest_pairing_date_candidates %}
+              <td>{{ date.day|date:"D, d. M" }}</td>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for flat in latest_pairing.flats.all %}
+              {% for flatmate in flat.flatmates.all %}
+                {% if flatmate != user and flatmate.has_entered_schedule_for_latest_pairing %}
+                <tr>
+                  <td>{{ flatmate.facebook_name }}</td>
+                  {% for candidate in flatmate.get_start_time_candidates_for_latest_pairing %}
+                    <td>kann ab {{ candidate.time }}</td>
+                  {% endfor %}
+                </tr>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+
+              <tr>
+                <td>{{ user.facebook_name }}</td>
+                {% for candidate in user.get_start_time_candidates_for_latest_pairing %}
+                  <td>
+                    kann ab
+                    <input maxlength="5" name="start_time"
+                           value="{% if candidate.time %}{{ candidate.time|time:"H:i"}}{% else %}18:00{% endif %}" />
+                  </td>
+                {% endfor %}
+              </tr>
+          </tbody>
+        </table>
+        <input type=submit value="Zeitplan speichern" />
+        </form>
+
+      </div>
     </div>
-    <div class="clear"></div>
-    <div id="date_options">
-        <div class="day">
-            <h3>Montag</h3>
-            <ul>
-                <li>17:30</li>
-                <li>18:00</li>
-                <li>19:00</li>
-                <li>17:00</li>
-            </ul>
-        </div>
-        <div class="day">
-            <h3>Montag</h3>
-            <ul>
-                <li>17:30</li>
-                <li>18:00</li>
-                <li>19:00</li>
-                <li>17:00</li>
-            </ul>
-        </div>
-        <div class="day">
-            <h3>Montag</h3>
-            <ul>
-                <li>17:30</li>
-                <li>18:00</li>
-                <li>19:00</li>
-                <li>17:00</li>
-            </ul>
-        </div>
-    </div>
-    <div class="clear"></div>
-    <div class="recipes">
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-        <div class="test"></div>
-    </div>
-    <div class="clear"></div>
-    </div>
+    {% endif %}
+</div>
     
 {% endblock %}
 
-<!--<h1>Willkommen {{ user.get_profile.facebook_name }}</h1>
+<!--<h1>Willkommen {{ user.facebook_name }}</h1>
 
 <h2>Deine WG</h2>
 <tt>{% absurl join_flat flat.token %}</tt>

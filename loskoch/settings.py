@@ -96,6 +96,7 @@ INSTALLED_APPS = (
     'core',
     'discussions',
     'recipes',
+    'pairings',
 
     'django_facebook',
 
