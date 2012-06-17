@@ -26,12 +26,18 @@ class Pairing(models.Model):
                     recipe.votes = self.all_votes.filter(vote_recipe=recipe).count()
         return all_recipes
 
+    def get_all_flatmates(self):
+        mates = []
+        for flat in self.flats.all():
+            mates.extend(flat.flatmates.all())
+        return mates
+
 
 class StartTimeCandidate(models.Model):
     pairing = models.ForeignKey(Pairing, related_name='start_time_candidates')
     user = models.ForeignKey('auth.User')
     day = models.DateField()
-    time = models.TimeField(null=True)
+    time = models.TimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['day']
@@ -40,7 +46,31 @@ class StartTimeCandidate(models.Model):
 RANDOM = '?'
 
 
-def generate_pairing(host_flat):
+def generate_pairings():
+    # Exclude flats with pending invitations.
+    only_complete_flats = Flatshare.objects.annotate(flatmates_count=models.Count('flatmates')) \
+                                           .filter(flatmates_count=models.F('size'))
+
+    # Exclude flat shares that are already seeing someone.
+    today_minus_ten_days = (now() - timedelta(days=10)).replace(hour=0, minute=0, second=0)
+    only_free_flats = Q(latest_pairing=None) | Q(latest_pairing__start_datetime__lte=today_minus_ten_days)
+
+    host_candidates = guest_candidates = only_complete_flats.filter(only_free_flats).order_by('?')
+    guest_candidates = guest_candidates.all()
+
+    while 1:
+        try:
+            host = host_candidates[0]
+        except IndexError:
+            break
+        pairing = generate_pairing(host, guest_candidates)
+        if pairing:
+            guest_candidates = guest_candidates.exclude(
+                pk__in=[flat.pk for flat in pairing.flats.all()])
+        host_candidates = host_candidates.exclude(pk=host.pk)
+
+
+def generate_pairing(host_flat, guest_candidates):
     # TODO: singles
 
     n_guests_min = math.ceil(0.6 * host_flat.size)
@@ -54,22 +84,17 @@ def generate_pairing(host_flat):
     # nor too big to accommodate everyone.
     properly_sized_flats = Q(size__range=[n_guests_min, n_guests_max])
 
-    today_minus_ten_days = (now() - timedelta(days=10)).replace(hour=0, minute=0, second=0)
-    only_free_flats = Q(latest_pairing=None) | Q(latest_pairing__start_datetime__lte=today_minus_ten_days)
-
-    # Exclude all the flat shraes the host already knows (including itself).
+    # Exclude all the flat shares that the host already knows (including itself).
     already_dated_pks = [flat.pk for flat in chain.from_iterable(
                             pairing.flats.all() for pairing in host_flat.pairings.all())]
     only_undated_flats = ~Q(pk__in=already_dated_pks + [host_flat.pk])
 
-
-    flat_candidates = Flatshare.objects.filter(nearby_flats) \
+    guest_candidates = guest_candidates.filter(nearby_flats) \
                                        .filter(properly_sized_flats) \
                                        .filter(only_undated_flats) \
-                                       .filter(only_free_flats)
 
     try:
-        guest_flat = flat_candidates.order_by(RANDOM)[0]
+        guest_flat = guest_candidates.order_by(RANDOM)[0]
     except IndexError:
         return None
 

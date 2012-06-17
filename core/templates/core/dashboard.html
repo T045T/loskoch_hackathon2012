@@ -78,7 +78,8 @@ h4 { margin:6px; }
 
 
 <div class="content">
-    <div id="my_flat">
+  <div id="my_flat">
+    <tt>{% absurl join_flat flat.token %}</tt>
     {% for person in flat.flatmates.all %}
     	<div class="head_shot">
     		<img class="img_scale_horizontal" src="{{ person.image.url }}"></img>
@@ -121,8 +122,8 @@ h4 { margin:6px; }
           <thead>
             <tr>
               <td></td>
-              {% for date in latest_pairing_date_candidates %}
-              <td>{{ date.day|date:"D, d. M" }}</td>
+              {% for day in latest_pairing_date_candidates.keys %}
+                <td>{{ day|date:"D, d. M" }}</td>
               {% endfor %}
             </tr>
           </thead>
@@ -133,7 +134,12 @@ h4 { margin:6px; }
                 <tr>
                   <td>{{ flatmate.facebook_name }}</td>
                   {% for candidate in flatmate.get_start_time_candidates_for_latest_pairing %}
-                    <td>kann ab {{ candidate.time }}</td>
+                    <td>
+                      {% if candidate.time %}
+                      kann ab {{ candidate.time|time }}</td>
+                      {% else %}
+                      -
+                      {% endif %}
                   {% endfor %}
                 </tr>
                 {% endif %}
@@ -144,9 +150,19 @@ h4 { margin:6px; }
                 <td>{{ user.facebook_name }}</td>
                 {% for candidate in user.get_start_time_candidates_for_latest_pairing %}
                   <td>
-                    kann ab
+                    da kann ich ab
                     <input maxlength="5" name="start_time"
-                           value="{% if candidate.time %}{{ candidate.time|time:"H:i"}}{% else %}18:00{% endif %}" />
+                           value="{% if candidate.time %}{{ candidate.time|time }}{% endif %}"
+                           placeholder="hh:mm"/>
+                  </td>
+                {% endfor %}
+              </tr>
+
+              <tr>
+                <td>Gesamt</td>
+                {% for day, stuff in latest_pairing_date_candidates.items %}
+                  <td>
+                    {{ stuff.votes }}/{{ latest_pairing.get_all_flatmates|length }}, ab {{ stuff.start|time }}
                   </td>
                 {% endfor %}
               </tr>
