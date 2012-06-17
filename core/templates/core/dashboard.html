@@ -26,7 +26,6 @@
     float:left; }
 *.recipe_list { 
     margin-top:12px;
-    padding-right: 80px;
     float:left; }
     
 
@@ -70,7 +69,7 @@
 </style>
 
 
-<div class="content">
+<div class="container">
 	<div class="row">
 		<div id="other_flat" class="span6">
 			{% if not flat.latest_pairing %}
@@ -80,6 +79,7 @@
 			{% for flat in flat.latest_pairing.flats.all %}
       		{% if flat != user.flat %}
       		<h2>{{ flat.name }}</h2>
+			<p>Wohnen hier: <a href="{{gmaps_url}}">{{ flat.address }}</a></p>
       		{% for flatmate in flat.flatmates.all %}
       		<div class="head_shot thumbnail">
 				<img class="img_scale_horizontal" src="{{ flatmate.image.url }}"></img>
@@ -87,7 +87,6 @@
 			</div>
 			{% endfor %}
 		    <div class="clear"></div>
-			<p>Wohnen hier: {{ flat.address }}</p>
 			{% endif %}
 			{% endfor %}
 			{% endif %}
@@ -119,6 +118,7 @@
 	{% if flat.latest_pairing %}
       	      <div class="clear"></div>
       <div id="date_options">
+      <h1>Zeitplanung</h1>
         <form method=post action="{% url dashboard_save_schedule %}">
         {% csrf_token %}
         <table class="table table-bordered">
@@ -154,7 +154,8 @@
                 {% for candidate in user.get_start_time_candidates_for_latest_pairing %}
                   <td>
                     da kann ich ab
-                    <input maxlength="5" name="start_time"
+                    <input style="width:60px;"
+                    	   maxlength="5" name="start_time"
                            value="{% if candidate.time %}{{ candidate.time|time }}{% endif %}"
                            placeholder="hh:mm"/>
                   </td>
@@ -176,6 +177,7 @@
 
       </div>
       <div class="recipe_list">
+      <h1>Essensplanung</h1>
       	{% for recipe in flat.latest_pairing.all_recipes %}
       	<div class="recipe thumbnail">
       		<h3>{{ recipe.name }}</h3>
@@ -189,7 +191,13 @@
       		<button onclick="window.location.href='{% url vote_for_recipe recipe.id %}'" {{ user.can_vote_on_current_pairing|yesno:",disabled" }} class="btn">Will ich kochen!</button>
       	</div>
       	{% endfor %}
-      	
+      	<div class="recipe thumbnail">
+      		<h3><a href="{% url add_recipe %}">Neues Rezept!</a></h3>
+      		<div class="image_container thumbnail">
+	      		<a style="font-size:160px; " href="{% url add_recipe %}">+</i></a>
+    		</div>
+      		<p><a href="{% url add_recipe %}">Füge ein neues Lieblingsrezept hinzu!</a></p>
+      	</div>
       </div>
     </div>
     {% endif %}
