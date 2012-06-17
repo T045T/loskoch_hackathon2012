@@ -3,23 +3,8 @@
 
 {% block content %}
 
-
-<link rel=stylesheet href=/static/core/css/bootstrap.css />
-<script type="text/javascript" src=/static/core/js/bootstrap.js></script>
 <style type="text/css">
-td { border: 1px solid black; }
-*.day { 
-    background-color:#dddddd; 
-    width:9%; 
-    min-width:105px; 
-    min-height:150px;
-    padding:5px; 
-    float:left;
-    border-width:1px;
-    border-right-style:solid;
-    border-bottom-style:solid;
-    margin-right:12px;
-    }
+
 *.sidebar {overflow:auto; position:fixed; top:0; right:0; width:20%; height:100%; background-color:#336633; float:right;}
 
 *.content { height:100%; min-width:960px;}
@@ -28,19 +13,16 @@ td { border: 1px solid black; }
 #partner { height:200px; }
 #portrait { float:left; }
 #details { vertical-align:top; height:100%; margin-left:5px; float:left; }
-h1 { margin-top:12px; padding-top:0px;}
-h2 { margin-top:0px; }
-h4 { margin:6px; }
+
 #date_options { margin-top:12px; }
 
 *.clear { clear:both; }
 
 *.recipe { 
-    width:250px;
     padding: 6px;
+    background-color: #cccccc;
     margin-right:12px;
     margin-bottom:12px;
-    background-color:#dd0000;
     float:left; }
 *.recipe_list { 
     margin-top:12px;
@@ -54,25 +36,21 @@ h4 { margin:6px; }
 	float:right;
 	right:0;
 	top:0;
-	width:80px;
+	width:100px;
 	padding:6px;
-}
-
-*.table_input {
-	width: 12%;
-	min-width: 80px;
 }
 
 *.head_shot {
 	margin-bottom:6px;
 }
 *.empty_box {
+	width:85px;
 	background-color:#aaaaaa;
 	margin-bottom:6px;
 }
 
 *.empty_box_text {
-	margin: 0px;
+	margin: 12px;
 	text-align: center;
 	vertical-align: middle;
 	font-size:60px;
@@ -80,6 +58,12 @@ h4 { margin:6px; }
 
 *.image_container {
 	width:250px;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+.container-fluid > .sidebar-right {
+  float: right;
+  width: 220px;
 }
 
 </style>
@@ -89,12 +73,13 @@ h4 { margin:6px; }
   <div id="my_flat">
     <tt>{% absurl join_flat flat.token %}</tt>
     {% for person in flat.flatmates.all %}
-    	<div class="head_shot">
+    	<div class="head_shot thumbnail">
     		<img class="img_scale_horizontal" src="{{ person.image.url }}"></img>
     	</div>
+    	<strong>{{ person.facebook_name }}</strong>
     	{% endfor %}
     	{% for i in range%}
-    	<div class="empty_box">
+    	<div class="empty_box thumbnail">
     		<p class="empty_box_text">?</p>
     	</div>
     	{% endfor %}
@@ -104,12 +89,11 @@ h4 { margin:6px; }
     {% else %}
       <div id="partner">
           <h1>WG-Dinner mit...</h1>
-          <img class="img_scale_vertical" id="portrait" src="foo.JPG" />
           <div id="details">
             {% for flat in flat.latest_pairing.flats.all %}
               {% if flat != user.flat %}
                 <h2>{{ flat.name }}</h2>
-                <ul>
+                <ul class="unstyled">
                   {% for flatmate in flat.flatmates.all %}
                     <li>{{ flatmate.facebook_name }}</li>
                   {% endfor %}
@@ -126,12 +110,12 @@ h4 { margin:6px; }
       <div id="date_options">
         <form method=post action="{% url dashboard_save_schedule %}">
         {% csrf_token %}
-        <table class="table">
+        <table class="table table-bordered">
           <thead>
             <tr>
-              <td></td>
+              <th></th>
               {% for day in latest_pairing_date_candidates.keys %}
-                <td>{{ day|date:"D, d. M" }}</td>
+                <th>{{ day|date:"D, d. M" }}</th>
               {% endfor %}
             </tr>
           </thead>
@@ -176,22 +160,22 @@ h4 { margin:6px; }
               </tr>
           </tbody>
         </table>
-        <input type=submit value="Zeitplan speichern" />
+        <input type=submit class="btn" value="Zeitplan speichern" />
         </form>
 
       </div>
       <div class="recipe_list">
       	{% for recipe in flat.latest_pairing.all_recipes %}
-      	<div class="recipe">
+      	<div class="recipe thumbnail">
       		<h3>{{ recipe.name }}</h3>
       		<h4>({{ recipe.owner.get_profile.facebook_name }})</h4>
-      		<div class="image_container">
+      		<div class="image_container thumbnail">
 	      		<img class="img_scale_horizontal" src={{ recipe.image_url }} alt={{ recipe.name }}></img>
       		</div>
       		<p>{{ recipe.desc }}</p>
       		<h2>{{ recipe.votes }}</h2> 
       		
-      		<button onclick="window.location.href='{% url vote_for_recipe recipe.id %}'" {{ user.can_vote_on_current_pairing|yesno:",disabled" }}>Will ich kochen!</button>
+      		<button onclick="window.location.href='{% url vote_for_recipe recipe.id %}'" {{ user.can_vote_on_current_pairing|yesno:",disabled" }} class="btn">Will ich kochen!</button>
       	</div>
       	{% endfor %}
       	
