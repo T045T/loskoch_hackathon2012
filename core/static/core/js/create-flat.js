@@ -57,6 +57,10 @@ function initialize() {
   google.maps.event.addListener(autocomplete, 'place_changed', function(event) {
     markResult();
   });
+
+  document.getElementById('id_address').addEventListener('focus', function() {
+    document.getElementById('map-container').style.display = 'block';
+  }, false);
 }
 
 function markResult() {

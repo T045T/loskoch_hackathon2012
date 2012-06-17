@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}{% endblock %}
+{% block content %}
+  <style>
+    p { font-family: Georgia, serif; font-size: 200%; font-style: italic; margin: 50px 0; }
+    .btn { font-size: 250%; padding: 50px 70px; }
+    .btn span { position: relative; display: block; top: 20px; font-size: 50%; }
+  </style>
+
+  <img src=/static/core/logo.svg />
+  <p>Hier könnte Ihre Werbung stehen</p>
+  <a class="btn btn-primary" href="{% url create_flat %}">
+    Jetzt deine WG anmelden <span>Einloggen via Facebook</span>
+  </a>
+{% endblock %}

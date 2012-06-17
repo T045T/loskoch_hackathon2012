@@ -2,22 +2,25 @@
 
 {% block content %}
 
+<h1>Deine WG anmelden</h1>
+
 <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
 <script src=/static/core/js/create-flat.js></script>
 
 <link rel=stylesheet href=/static/core/css/create-flat.css />
 
-<form method="POST" action="">
+<form method="POST" action="" class="form-horizontal">
   {% csrf_token %}
   <div class="fieldWrapper">
-    {{ form.name.errors }}
-    <label for="id_name">Gib Eurer WG einen Namen!</label>
-    {{ form.name }}
-  </div>
-  <div class="fieldWrapper">
     {{ form.size.errors }}
-    <label for="id_size">Wie viele Leute wohnen bei euch?</label>
+    <label for="id_size">Wie viele Leute wohnen in eurer WG?</label>
     {{ form.size }}
+    <script>
+      document.getElementById('id_size').addEventListener('change', function() {
+        var d = document.getElementById('id_size').value;
+        document.getElementById('id_max_guests').value = Math.ceil(d * (d > 5 ? 0.7 : 1.2))
+      });
+    </script>
   </div>
   <div class="fieldWrapper">
     {{ form.max_guests.errors }}
@@ -27,19 +30,27 @@
       
   <div class="fieldWrapper">
     {{ form.address.errors }}
-    <label for="id_address">Adresse</label>
+    <label for="id_address">Wo wohnt ihr?</label>
     <div id="locationField">
       {{ form.address }}
-      <img id="logo" src="https://developers.google.com/maps/documentation/places/images/powered-by-google-on-white.png"></img>
     </div>
   </div>
 
-  <div id="map"></div>
+  <div id="map-container">
+    <img id="logo" src="https://developers.google.com/maps/documentation/places/images/powered-by-google-on-white.png"></img>
+    <div id="map"></div>
+  </div>
 
   {{ form.location }}
-  {{ form.location.errors }}
 
-  <a href="#" onClick="document.forms[0].submit()"><img src="/static/core/check.png"></img></a>
+  <div class="fieldWrapper">
+    {{ form.name.errors }}
+    <label for="id_name">Gib deiner WG einen Namen!</label>
+    {{ form.name }}
+    <script>document.getElementById('id_name').setAttribute('placeholder', "(optional)")</script>
+  </div>
+
+  <button type=submit class="btn btn-primary">Anmelden!</button>
 </form>
 
 {% endblock %}
