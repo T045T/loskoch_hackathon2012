@@ -17,6 +17,15 @@ class Pairing(models.Model):
     class Meta:
         ordering = ['-created']
 
+    def all_recipes(self):
+        all_recipes = []
+        for flat in self.flats.all():
+            for mate in flat.flatmates.all():
+                for recipe in mate.user.recipes.all():
+                    all_recipes.append(recipe)
+                    recipe.votes = self.all_votes.filter(vote_recipe=recipe).count()
+        return all_recipes
+
 
 class StartTimeCandidate(models.Model):
     pairing = models.ForeignKey(Pairing, related_name='start_time_candidates')

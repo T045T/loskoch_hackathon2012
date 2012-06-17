@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from core.models import Flatshare
 from core.forms import FlatCreationForm
+from recipes.models import Recipe
 
 
 class CreateFlatView(django.views.generic.CreateView):
@@ -49,7 +50,7 @@ def dashboard(request):
     return render(request, 'core/dashboard.html', {
         'user': request.user.get_profile(),
         'flat': flat,
-        'range' : range(flat.size - flat.flatmates.count()),
+        'range': range(flat.size - flat.flatmates.count()),
         'latest_pairing': flat.latest_pairing,
         'latest_pairing_date_candidates': latest_pairing_date_candidates,
     })
@@ -66,4 +67,12 @@ def save_schedule(request):
             candidate.time = datetime.time(hour=hour, minute=minute)
             candidate.save()
 
+    return redirect('dashboard')
+
+
+@login_required
+def vote_for_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    user = request.user.get_profile()
+    user.vote(recipe)
     return redirect('dashboard')
