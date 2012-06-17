@@ -51,8 +51,8 @@ class PersonProfile(FacebookProfileModel):
 
     def count_votes_left(self):
         if self.can_vote_on_current_pairing():
-            return 3 - self.flat.latest_pairing.votes.filter(
-                user=self.user).count()
+            return 3 - self.flat.latest_pairing.all_votes.filter(
+                voter=self.user).count()
         else:
             return 0
 

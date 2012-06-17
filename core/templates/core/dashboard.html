@@ -188,7 +188,7 @@ h2 {
       {% if not user.count_votes_left %}
       <h2>Du hast schon alle deine Votes genutzt.</h2>
       {% else %}
-      <h2>Du hast nocht {{user.count_votes_left}} Votes!</h2>
+      <h2>Du hast noch {{user.count_votes_left}} Votes!</h2>
       {% endif %}
       	{% for recipe in flat.latest_pairing.all_recipes %}
       	<div class="recipe thumbnail">
