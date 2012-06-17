@@ -15,11 +15,12 @@
         	
             <div id="library" class="box">
             	<div id="search">
-                	<label for="search-term">Search</label>
+                	<label for="search-term">Foto Suchen</label>
                     <input id="search-term" type="text" 
                     	data-bind="value: searchTerm, valueUpdate: 'afterkeydown', event: {keyup: search }"></input>
                 </div>
                 <div id="search-results">
+                <img id="spinner" src=/static/recipes/img/spinner.gif alt="Searching..." data-bind="visible: isSearching" />
 	                <ul data-bind="foreach: foundPhotos">
 		                <li data-bind="attr: { 'data-id' : id }, click:select, css: {selected: $root.selectedPhoto() !== undefined && $root.selectedPhoto().id() === id() }">
 			                <img data-bind="attr: { 'src' : smallImageUrl, 'alt' : title, title: title }"></img>
@@ -28,7 +29,11 @@
 				</div>
             </div>
             	<div id="preview" class="box" data-bind="with: selectedPhoto">
+            	<div class="fieldWrapper">
+            	<label for="id_name">Rezeptname</label>
             		{{ form.name }}
+            		
+            	</div>
 	            	<div id="preview-image">
 		            	<img data-bind="attr: { 'src' : mediumImageUrl, 'alt' : title }"></img>
 		            	<input data-bind="attr: { 'value' : mediumImageUrl }" type="url" name="image_url" id="id_image_url"></input>

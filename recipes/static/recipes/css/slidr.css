@@ -86,13 +86,13 @@ header a
 	font-size: 0.85em;
 	font-weight: bold;
 	text-align: center;
-	margin-right: 10px;
-	width: 75px;
+	margin-right: 12px;
+	margin-left: 12px;
 }
 
 #search input
 {
-	width: 345px;
+	width: 325px;
 }
 
 #search-results
@@ -138,9 +138,9 @@ header a
 #preview
 {
 	float: right;
-	margin-bottom: 20px;
 	width: 370px;
 	height: 350px;	
+	padding: 10px;
 }
 
 #preview-image
@@ -149,81 +149,35 @@ header a
 	background: #ddd;
 	text-align: center;
 	vertical-align: middle;
+	padding:0px;
 	width: 370px;
-	height: 310px;	
+	height: 280px;	
+}
+
+#id_image_url
+{
+	display:none;
+}
+
+#id_name {
+	margin-top: 0px;
+	margin-bottom: 6px;
 }
 
 #preview-image img
 {
 	max-width: 370px;
-	max-height: 310px;	
+	max-height: 280px;	
 }
 
 #preview-caption
 {
-	margin-top: 10px;
+	margin-top: 6px;
 }
 
 #preview-caption input
 {
-	width: 354px;
-}
-
-#timeline
-{
-	clear: both;
-	overflow: auto;
-	overflow-x: scroll;
-	padding: 10px 0;
-	height: 102px;
-}
-
-#timeline ol
-{
-	float: left;
-	padding: 0 10px;
-	margin-right: -32767px;
-	min-height: 85px;
-	min-width: 97.5%;
-}
-
-#timeline ol li
-{
-	float: left;
-	position: relative;
-	display: block;
-	border: dotted 5px #fff;	
-	cursor: pointer;
-}
-
-#timeline ol li img.remove
-{
-	position: absolute;
-	top: -6px;
-	right: -6px;	
-}
-
-#timeline ol li:hover
-{
-	border-color: #ff0084;
-}
-
-#timeline ol li:active,
-#timeline ol li.selected
-{
-	border-color: #0063dc;
-}
-
-#timeline ol li.ui-sortable-placeholder
-{
-	border-style: solid;
-	border-color: #ddd;
-	border-top-width: 5px;
-	border-bottom-width: 5px;
-	border-left-width: 42px;
-	border-right-width: 42px;
-	width: 0 !important;
-	visibility: visible !important;
+	width: 370px;
 }
 
 footer
@@ -249,4 +203,15 @@ footer button.disabled
 #slides
 {
 	display: none;	
+}
+
+*.fieldWrapper label
+{	
+	display: inline-block;
+	color: #aaa;
+	font-size: 0.85em;
+	font-weight: bold;
+	text-align: center;
+	margin-right: 24px;
+	margin-left: 12px;
 }

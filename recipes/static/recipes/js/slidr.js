@@ -1,6 +1,7 @@
 var flickrApiKey = "c23b3fa60d0948eeb3c4c9fe43fb4dd7";
 var viewModel = {
     searchTerm: ko.observable(""),
+	isSearching: ko.observable(false),
     searchTimeout: null,
     foundPhotos: ko.observableArray([]),
 	tempPhoto: ko.observable(),
@@ -17,9 +18,18 @@ var viewModel = {
 					if(data.stat == "ok") {
 						ko.mapping.fromJS(data.photos.photo, photoMappingOptions, viewModel.foundPhotos);
 					}
+					
+					// Un-set searching flag
+					viewModel.isSearching(false);
+					
+					// Scroll the search results pane to the top
+					$("#search-results").scrollTop(0);
 				});
 				
 			}, 1000);
+			
+			// Set searching flag
+			this.isSearching(true)
 		}
     }
 };
