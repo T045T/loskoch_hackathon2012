@@ -3,6 +3,9 @@
 
 {% block content %}
 
+
+<link rel=stylesheet href=/static/core/css/bootstrap.css />
+<script type="text/javascript" src=/static/core/js/bootstrap.js></script>
 <style type="text/css">
 td { border: 1px solid black; }
 *.day { 
@@ -53,6 +56,11 @@ h4 { margin:6px; }
 	top:0;
 	width:80px;
 	padding:6px;
+}
+
+*.table_input {
+	width: 12%;
+	min-width: 80px;
 }
 
 *.head_shot {
@@ -117,7 +125,7 @@ h4 { margin:6px; }
       <div id="date_options">
         <form method=post action="{% url dashboard_save_schedule %}">
         {% csrf_token %}
-        <table>
+        <table class="table">
           <thead>
             <tr>
               <td></td>
