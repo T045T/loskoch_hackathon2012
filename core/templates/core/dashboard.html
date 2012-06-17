@@ -27,31 +27,22 @@ td { border: 1px solid black; }
 #details { vertical-align:top; height:100%; margin-left:5px; float:left; }
 h1 { margin-top:12px; padding-top:0px;}
 h2 { margin-top:0px; }
+h4 { margin:6px; }
 #date_options { margin-top:12px; }
 
 *.clear { clear:both; }
 
-*.test { 
+*.recipe { 
     width:250px;
-    height:250px;
+    padding: 6px;
     margin-right:12px;
     margin-bottom:12px;
     background-color:#dd0000;
     float:left; }
-*.recipes { 
+*.recipe_list { 
     margin-top:12px;
     padding-right: 80px;
     float:left; }
-    
-*.img_scale_horizontal {
-	text-align: center;
-	width: 100%;
-}
-
-*.img_scale_vertical {
-	vertical-align: middle;
-	height: 100%;
-}
     
 #my_flat {
 	position: fixed;
@@ -77,6 +68,10 @@ h2 { margin-top:0px; }
 	text-align: center;
 	vertical-align: middle;
 	font-size:60px;
+}
+
+*.image_container {
+	width:250px;
 }
 
 </style>
@@ -161,21 +156,24 @@ h2 { margin-top:0px; }
         </form>
 
       </div>
+      <div class="recipe_list">
+      	{% for recipe in flat.latest_pairing.all_recipes %}
+      	<div class="recipe">
+      		<h3>{{ recipe.name }}</h3>
+      		<h4>({{ recipe.owner.get_profile.facebook_name }})</h4>
+      		<div class="image_container">
+	      		<img class="img_scale_horizontal" src={{ recipe.image_url }} alt={{ recipe.name }}></img>
+      		</div>
+      		<p>{{ recipe.desc }}</p>
+      		<h2>{{ recipe.votes }}</h2> 
+      		
+      		<button onclick="window.location.href='{% url vote_for_recipe recipe.id %}'" {{ user.can_vote_on_current_pairing|yesno:",disabled" }}>Will ich kochen!</button>
+      	</div>
+      	{% endfor %}
+      	
+      </div>
     </div>
     {% endif %}
 </div>
     
 {% endblock %}
-
-<!--<h1>Willkommen {{ user.facebook_name }}</h1>
-
-<h2>Deine WG</h2>
-<tt>{% absurl join_flat flat.token %}</tt>
-<ul>
-  {% for person in flat.flatmates.all %}
-    <li>
-      <img src="{{ person.image.url }}" />
-      {{ person.facebook_name }}
-    </li>
-  {% endfor %}
-</ul>-->

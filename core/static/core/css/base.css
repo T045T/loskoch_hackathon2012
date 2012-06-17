@@ -15,3 +15,13 @@ h3 {
     padding-left:4px;
     margin-left:4px; margin-right:8px;
 }
+
+*.img_scale_horizontal {
+	text-align: center;
+	width: 100%;
+}
+
+*.img_scale_vertical {
+	vertical-align: middle;
+	height: 100%;
+}
