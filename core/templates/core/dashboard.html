@@ -81,7 +81,7 @@ h2 {
 			{% if not flat.latest_pairing %}
 			<h1>Noch kein Date generiert</h1>
 			{% else %}
-			<h1>WG-Dinner mit...</h1>
+			<h1>Euer Koch-Date</h1>
 			{% for flat in flat.latest_pairing.flats.all %}
       		{% if flat != user.flat %}
       		<h2>{{ flat.name }}</h2>
@@ -98,7 +98,7 @@ h2 {
 			{% endif %}
 		</div>
 		<div id="my_flat" class="span6">
-			<h1>Deine WG</h1>
+			<h1>Ihr</h1>
 			<h2>{{ flat.name }}</h2>
 			{% for person in flat.flatmates.all %}
 			<div class="head_shot thumbnail">
