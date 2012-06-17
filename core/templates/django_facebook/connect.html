@@ -1,4 +1,3 @@
-<form action="{% url facebook_connect %}?facebook_login=1" method="post">
-  <input type="hidden" name="register_next" value="{{ request.GET.next }}" />
+<form action="{% url facebook_connect %}?facebook_login=1&register_next={{ request.GET.next }}" method="post">
   <input type="image" src="http://e.fashiocdn.com/images/b_signin_facebook_small.png" />
 </form>

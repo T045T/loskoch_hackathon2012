@@ -25,8 +25,8 @@ class Flatshare(models.Model):
     address = models.CharField(max_length=200)
     location = PointField()
 
-    latest_pairing = models.ForeignKey('pairings.Pairing',
-        blank=True, null=True)
+    latest_pairing = models.ForeignKey('pairings.Pairing', blank=True, null=True,
+                                       on_delete=models.SET_NULL)
 
     objects = GeoManager()
 
@@ -72,8 +72,8 @@ def create_facebook_profile(sender, instance, created, **kwargs):
 
 def post_create_flatshare(sender, instance, created, **kwargs):
     if created:
-        from pairings.models import generate_pairing
-        generate_pairing(instance)
+        from pairings.models import generate_pairings
+        generate_pairings()
 
 post_save.connect(create_facebook_profile, sender=User)
 post_save.connect(post_create_flatshare, sender=Flatshare)
